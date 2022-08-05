@@ -74,3 +74,5 @@ end
 # Added gems
 gem 'devise'
 gem 'pg'
+
+gem "tailwindcss-rails", "~> 2.0"
