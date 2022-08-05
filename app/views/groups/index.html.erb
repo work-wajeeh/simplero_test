@@ -1,14 +1,19 @@
 <p style="color: green"><%= notice %></p>
+<div id='group-index' style='margin:20px'>
+  <h1>Groups</h1>
 
-<h1>Groups</h1>
-
-<div id="groups">
-  <% @groups.each do |group| %>
-    <%= render group %>
-    <p>
-      <%= link_to "Show this group", group %>
-    </p>
-  <% end %>
+  <div id="groups">
+    <% @groups.each do |group| %>
+      <div style='width: 22%;margin: 20px 70px;'>
+        <span><%= link_to group.name, group %></span>
+        <span style='float:right'>
+          <%= group_relation_status(group, current_user) %>
+        </span>
+      </div>
+      <hr>
+    <% end %>
+  </div>
+  <div style='float:right; margin:20px'>
+    <%= link_to "Create a New Group", new_group_path %>
+  </div>
 </div>
-
-<%= link_to "New group", new_group_path %>

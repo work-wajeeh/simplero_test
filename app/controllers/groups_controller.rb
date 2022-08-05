@@ -1,8 +1,8 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: %i[ show edit update destroy ]
+  before_action :set_group, only: %i[ show edit update destroy join ]
 
   def index
-    @groups = current_user.groups
+    @groups = Group.all.includes(:user_groups)
   end
 
   def show
@@ -13,6 +13,7 @@ class GroupsController < ApplicationController
   end
 
   def edit
+    redirect_to group_url(@group), notice: "You can't edit this group." unless @group.creator?(current_user)
   end
 
   def create
@@ -46,6 +47,17 @@ class GroupsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to groups_url, notice: "Group was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def join
+    joined = @group.add_user(current_user)
+    respond_to do |format|
+      if joined
+        format.html { redirect_to group_url(@group), notice: "You have joined the group successfully." }
+      else
+        format.html { redirect_to groups_url, notice: "There was an error in joining this group." }
+      end
     end
   end
 

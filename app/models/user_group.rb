@@ -1,5 +1,7 @@
 class UserGroup < ApplicationRecord
     belongs_to :user
     belongs_to :group
-    enum status: {"appproved"=>'Approved', "pending"=>'Pending', "rejected" => "Rejected", "removed" => "Removed"}
+    validates :user_id, :uniqueness => { :scope => :group_id }
+
+    enum status: {"joined"=>'Joined', "pending"=>'Pending', "removed" => "Removed"}
 end

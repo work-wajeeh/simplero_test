@@ -4,9 +4,12 @@
   <%= render @group %>
   <p>Created by: </p>
   <div>
-    <%= link_to "Edit this group", edit_group_path(@group) %> |
     <%= link_to "Back to groups", groups_path %>
-
-    <%= button_to "Destroy this group", @group, method: :delete %>
+    <%if current_user.group_creatore? (@group) %>
+      <div>
+        <%= link_to "Edit this group", edit_group_path(@group) %>
+        <%= button_to "Destroy this group", @group, method: :delete %>
+      </div>
+    <%end%>
   </div>
 </div>
